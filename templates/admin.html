@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dr.Tea | Admin</title>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", sans-serif;
+      }
+
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background-image: url("../static/assets/images/adminBackground.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+      }
+
+      .container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        /* From https://css.glass */
+        background: rgba(255, 255, 255, 0.42);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+
+      .container__header,
+      .tabContent {
+        position: relative;
+        width: 60%;
+        height: 10%;
+        background: rgba(255, 255, 255, 0.54);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        margin: 10px 20%;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .header__left {
+        width: 20%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .header__left img {
+        width: 60px;
+        height: 60px;
+      }
+
+      .header__left h2 {
+        color: #4287f5;
+      }
+
+      .header__right {
+        width: 20%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .header__right a {
+        margin: 5px;
+        text-decoration: none;
+        color: #4287f5;
+        padding: 5px 15px;
+        border-radius: 30px;
+        font-weight: 600;
+        transition: 200ms;
+      }
+
+      #log:hover {
+        background-color: rgba(188, 194, 186, 0.56);
+      }
+
+      .section__btn {
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .section__btn button {
+        padding: 10px;
+        width: 20%;
+        margin: 2px;
+        border-radius: 20px;
+        border: none;
+        font-weight: 600;
+        background-color: #4287f5;
+        color: white;
+        cursor: pointer;
+        transition: 200ms;
+      }
+
+      .section__btn button:hover {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      }
+
+      .tabContent {
+        width: 90%;
+        height: 70%;
+        margin-left: 5%;
+        display: flex;
+        align-items: normal;
+        justify-content: normal;
+        flex-direction: column;
+        padding: 10px;
+        overflow: auto;
+      }
+
+      table {
+        border-style: hidden;
+        border-collapse: collapse;
+        margin-top: 10px;
+        border-bottom: 1px solid black;
+      }
+
+      tr {
+        padding: 10px;
+        text-align: center;
+      }
+
+      td {
+        padding: 10px;
+        border: 1px solid black;
+        background-color: #ececec;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <header id="home" class="container__header">
+        <div class="header__left">
+          <img src="../static/assets/images/logo.png" alt="Dr.Tea" />
+          <h2>Dr.Tea</h2>
+        </div>
+
+        <div class="header__right">
+          <a id="log" href="/login">Log Out</a>
+        </div>
+      </header>
+      <section class="section__btn">
+        <button onclick="viewTable('u')">User Details</button>
+        <button onclick="viewTable('c')">User Contact Details</button>
+      </section>
+      <section id="user" class="tabContent">
+        <h1>User Details</h1>
+        <table id="customers">
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>NIC</th>
+            <th>DOB</th>
+            <th>Phone Number</th>
+            <th>Address</th>
+          </tr>
+          {% for result in results%}
+          <tr>
+            <td>{{ result.0 }}</td>
+            <td>{{ result.2 }}</td>
+            <td>{{ result.3 }}</td>
+            <td>{{ result.4 }}</td>
+            <td>{{ result.5 }}</td>
+            <td>{{ result.6 }}</td>
+          </tr>
+          {% endfor%}
+        </table>
+      </section>
+      <section id="contact" class="tabContent" style="display: none">
+        <h1>User Contact Details</h1>
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Message</th>
+          </tr>
+          {% for result in results_c%}
+          <tr>
+            <td>{{ result.0}}</td>
+            <td>{{ result.1}}</td>
+            <td>{{ result.2}}</td>
+          </tr>
+          {% endfor%}
+        </table>
+      </section>
+    </main>
+    <script>
+      function viewTable(cityName) {
+        if (cityName === "u") {
+          document.getElementById("user").style.display = "flex";
+          document.getElementById("contact").style.display = "none";
+        } else {
+          document.getElementById("user").style.display = "none";
+          document.getElementById("contact").style.display = "flex";
+        }
+      }
+    </script>
+  </body>
+</html>

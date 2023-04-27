@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dr.Tea | Prediction Result</title>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", sans-serif;
+      }
+
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background-image: url("../static/assets/images/result.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+      }
+
+      .container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .result__container,
+      .description__container,
+      .solution__container {
+        position: relative;
+        width: 80%;
+        height: 30%;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.31);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        display: flex;
+        align-self: flex-start;
+        margin-top: 2.5%;
+        margin-left: 10%;
+        padding: 10px;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+      }
+
+      .result__container__itemContainer {
+        width: 50%;
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+
+      .result__container__item {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 10px;
+        height: 35%;
+        width: 100%;
+      }
+
+      .result__container__item h3:nth-child(1),
+      .result__container__item a {
+        margin-left: 10%;
+        display: flex;
+        color: white;
+      }
+
+      .result__container__item h3:nth-child(2) {
+        margin-left: 10px;
+        color: #79d15e;
+      }
+
+      .result__container__item a {
+        text-decoration: none;
+        background-color: #4287f5;
+        color: white;
+        padding: 12px;
+        border-radius: 25px;
+        margin-left: 70px;
+        font-weight: 500;
+        transition: 200ms;
+      }
+
+      .result__container__item a:hover {
+        box-shadow: rgba(50, 50, 93, 0.25) 0 13px 27px -5px,
+          rgba(0, 0, 0, 0.3) 0 8px 16px -8px;
+      }
+
+      .result__container__imageContainer {
+        width: 50%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .result__container__imageContainer img {
+        width: 80%;
+        height: 80%;
+        object-fit: contain;
+      }
+
+      .description__container {
+        height: fit-content;
+        display: flex;
+      }
+
+      .description__container p {
+        text-align: center;
+        font-weight: 600;
+      }
+
+      .solution__container {
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: column;
+        height: 37%;
+      }
+
+      .solution__container__text {
+        flex: 1;
+        width: 95%;
+        padding: 5px;
+        height: 100%;
+        overflow: auto;
+      }
+
+      .text {
+        margin-top: 10px;
+        text-align: justify;
+      }
+
+      ::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.54);
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <section class="result__container">
+        <div class="result__container__itemContainer">
+          <div class="result__container__item">
+            <h3>Prediction Result :</h3>
+            <h3>{{ pred_output }}</h3>
+          </div>
+          <div class="result__container__item">
+            <h3>Result Accuracy :</h3>
+            <h3>{{ pred_output_ac }}</h3>
+          </div>
+          <div class="result__container__item">
+            <a href="/chatbot">Back to Chatbot</a>
+          </div>
+        </div>
+        <div class="result__container__imageContainer">
+          <img src="{{ user_image }}" alt="{{ pred_output }}" />
+        </div>
+      </section>
+      <section class="description__container">
+        <p>{{ etcc }}</p>
+      </section>
+      <section class="solution__container">
+        <h3>Solutions :</h3>
+        <div class="solution__container__text">
+          <p class="text">{{ doctor1 }}</p>
+          <p class="text">{{ doctor2 }}</p>
+          <p class="text">{{ doctor3 }}</p>
+          <p class="text">{{ doctor4 }}</p>
+          <p class="text">{{ doctor5 }}</p>
+          <p class="text">{{ doctor6 }}</p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

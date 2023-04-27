@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dr.Tea | Register</title>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", sans-serif;
+      }
+
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background-image: url("../static/assets/images/reg_signin_background.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+      }
+
+      .container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .form__container {
+        position: relative;
+        width: 80%;
+        height: 95%;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.31);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      form {
+        position: relative;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        flex: 1;
+      }
+
+      .form__left {
+        width: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      .form__left a {
+        text-decoration: none;
+        font-weight: 500;
+        padding: 10px;
+        margin-left: 12%;
+        background: rgba(255, 255, 255, 0.31);
+        border-radius: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        transition: 200ms;
+      }
+
+      .form__left a:hover {
+        box-shadow: rgba(0, 0, 0, 0.3) 0 19px 38px,
+          rgba(0, 0, 0, 0.22) 0 15px 12px;
+      }
+
+      .form__left__logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .form__left__logo img {
+        width: 150px;
+        height: 150px;
+      }
+
+      .form__left__logo h2 {
+        font-size: 2.3rem;
+        color: #ececec;
+      }
+
+      .form__right {
+        width: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
+      }
+
+      .form__right h2 {
+        color: #ffffff;
+      }
+
+      .form__input {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .form__input p {
+        font-weight: 600;
+        margin: 5px 5%;
+      }
+
+      .form__input input[type="text"],
+      .form__input input[type="password"],
+      .form__input input[type="email"],
+      .form__input input[type="date"],
+      .form__input input[type="tel"],
+      .form__input input[type="submit"] {
+        padding: 10px;
+        width: 90%;
+        margin-left: 5%;
+        border-radius: 30px;
+        outline: none;
+        border: none;
+      }
+
+      .form__input input[type="submit"] {
+        margin: 5% 0 0 30%;
+        width: 40%;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 200ms;
+      }
+
+      .form__input input[type="submit"]:hover {
+        box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <section class="form__container">
+        <form id="register-form" name="myForm" action="/register-user" method="post" enctype="multipart/form-data">
+          <div class="form__left">
+            <div class="form__left__logo">
+              <img src="../static/assets/images/logo.png" alt="Dr.Tea" />
+              <h2>Dr.Tea</h2>
+            </div>
+            <a href="/login">Already Registered with Us?</a>
+          </div>
+          <div class="form__right">
+            <h2>Register</h2>
+            <div class="form__input">
+              <p>Username</p>
+              <label>
+                <input
+                  id="username"
+                  type="text"
+                  minlength="5"
+                  required
+                  placeholder="Username"
+                  name="username"
+                />
+              </label>
+            </div>
+            <div class="form__input">
+              <p>Password</p>
+              <label>
+                <input
+                  id="password"
+                  type="password"
+                  minlength="6"
+                  required
+                  placeholder="Password"
+                  name="password"
+                />
+              </label>
+            </div>
+            <div class="form__input">
+              <p>Email</p>
+              <label>
+                <input
+                  id="email"
+                  type="email"
+                  required
+                  placeholder="Email"
+                  name="email"
+                />
+              </label>
+            </div>
+            <div class="form__input">
+              <p>Nic</p>
+              <label>
+                <input
+                  id="nic"
+                  type="text"
+                  minlength="10"
+                  maxlength="14"
+                  required
+                  placeholder="Nic"
+                  name="nic"
+                  pattern="^([0-9]{9}[x|X|v|V]|[0-9]{12})$"
+                />
+              </label>
+            </div>
+            <div class="form__input">
+              <p>Date of Birth</p>
+              <label>
+                <input
+                  id="DOB"
+                  type="date"
+                  required
+                  placeholder="Date of Birth"
+                  name="dob"
+                />
+              </label>
+            </div>
+            <div class="form__input">
+              <p>Phone Number</p>
+              <label>
+                <input
+                  id="pNumber"
+                  type="tel"
+                  minlength="10"
+                  max="10"
+                  required
+                  placeholder="Phone Number"
+                  name="phonenumber"
+                />
+              </label>
+            </div>
+            <div class="form__input">
+              <p>Address</p>
+              <label>
+                <input
+                  id="address"
+                  type="text"
+                  required
+                  placeholder="Address"
+                  name="address"
+                />
+              </label>
+            </div>
+            <div class="form__input">
+              <input type="submit" value="Register" />
+            </div>
+          </div>
+        </form>
+      </section>
+    </main>
+  <script>
+      function validateForm() {
+          let x = document.forms["myForm"]["nic"].value;
+          let num = document.forms["myForm"]["pNumber"].value;
+
+          for (let i = 0; i < num.length; i++) {
+              if (/[0-9]/.test(num[i]) === false) {
+                  alert("Your phone number is not valid")
+                  return false;
+              }
+          }
+
+          if (x.length === 10) {
+              if (x.at(-1) !== 'v') {
+                  alert("Please add 'v");
+                  return false
+              }
+
+              if (/[0-9]/.test(x.substr(0, 8)) === false) {
+                  alert("Your nic does not contain numbers")
+                  return false;
+              }
+          } else if (x.length === 12) {
+              if (/[0-9]/.test(x.substr(0, 10)) === false) {
+                  alert("Your nic number does not contain numbers")
+              }
+          } else {
+              alert("Your nic is not valid")
+              return false;
+          }
+
+          alert("Registration Successfully Completed!")
+          return true;
+      }
+  </script>
+  </body>
+</html>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dr.Tea | Home</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", sans-serif;
+      }
+
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background-image: url("../static/assets/images/background.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+      }
+
+      .container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+
+      .container__header,
+      .section__heading,
+      .section__about,
+      .section__howWork,
+      .section__ourStory,
+      .section__contact {
+        position: relative;
+        width: 99%;
+        height: 10%;
+        box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        z-index: 1;
+        background: inherit;
+        overflow: hidden;
+        margin: 10px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+      }
+
+      .container__header:before,
+      .section__heading:before,
+      .section__about:before,
+      .section__howWork:before,
+      .section__ourStory:before,
+      .section__contact:before {
+        content: "";
+        position: absolute;
+        background: inherit;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        box-shadow: inset 0 0 2000px rgba(255, 255, 255, 0.5);
+        filter: blur(10px);
+        margin: -20px;
+      }
+
+      .header__left {
+        width: 20%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .header__left img {
+        width: 60px;
+        height: 60px;
+      }
+
+      .header__left h2 {
+        color: #4287f5;
+      }
+
+      .header__center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+      }
+
+      .header__center ul {
+        width: 80%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+      }
+
+      .header__center ul li {
+        list-style: none;
+      }
+
+      .header__center ul li a {
+        text-decoration: none !important;
+        color: #4287f5;
+        font-weight: 600;
+      }
+
+      .header__center ul li a:hover {
+        text-decoration: underline !important;
+      }
+
+      .header__right {
+        width: 20%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .header__right a {
+        margin: 5px;
+        text-decoration: none;
+        color: #4287f5;
+        padding: 5px 15px;
+        border-radius: 30px;
+        font-weight: 600;
+        transition: 200ms;
+      }
+
+      #reg {
+        background-color: #79d15e;
+        font-weight: 600;
+      }
+
+      #log:hover {
+        background-color: rgba(188, 194, 186, 0.56);
+      }
+
+      .section__heading {
+        width: 90%;
+        height: 30%;
+        margin-top: 10%;
+        margin-left: 5%;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        flex-direction: column;
+        color: #fff;
+      }
+
+      .section__heading h1 {
+        font-size: 3rem;
+      }
+
+      .section__about__heading,
+      .section__howWork__heading,
+      .section__ourStory__heading,
+      .section__contact__heading {
+        margin-top: 20%;
+        text-align: center;
+        font-size: 2rem;
+        color: #4287f5;
+      }
+
+      .section__about,
+      .section__howWork,
+      .section__ourStory,
+      .section__contact{
+        padding: 20px;
+        width: 90%;
+        height: fit-content;
+        margin-left: 5%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      .section__about p, .section__ourStory p {
+          font-size: 18px;
+        margin-bottom: 10px;
+        text-align: justify;
+        font-weight: 500;
+      }
+
+      .section__howWork {
+        flex-direction: row;
+          justify-content: space-around;
+          align-items: center;
+      }
+
+      .section__howWork img {
+          width: 30%;
+          height: 20%;
+      }
+
+      .section__howWork__text {
+          font-size: 1.5rem;
+          font-weight: 600;
+      }
+
+      .section__contact {
+          flex-direction: column;
+      }
+
+      .section__contact input, #subject {
+          width: 90%;
+          padding: 10px;
+          margin: 10px;
+          border-radius: 30px;
+          border: none;
+          outline: none;
+          transition: 200ms;
+      }
+
+      .section__contact input:hover, #subject:hover {
+          box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+      }
+
+      #subject {
+       resize: vertical;
+          height: 50px;
+      }
+
+      #submit {
+          width: 30%;
+          background-color: #4287f5;
+          color: #fff;
+          font-weight: 600;
+          float: right;
+          margin-right: 5%;
+          cursor: pointer;
+      }
+
+      .spacer {
+          height: 20%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header id="home" class="container__header">
+        <div class="header__left">
+          <img src="../static/assets/images/logo.png" alt="Dr.Tea" />
+          <h2>Dr.Tea</h2>
+        </div>
+        <div class="header__center">
+          <ul>
+            <li>
+              <a href="#home">Home</a>
+            </li>
+            <li>
+              <a href="#about">About Us</a>
+            </li>
+            <li>
+              <a href="#howWork">How it Works</a>
+            </li>
+            <li>
+              <a href="#ourStory">Our Story</a>
+            </li>
+            <li>
+              <a href="#contact">Contact Us</a>
+            </li>
+          </ul>
+        </div>
+        <div class="header__right">
+          <a id="log" href="/login">Sign In</a>
+          <a id="reg" href="/register">Register</a>
+        </div>
+      </header>
+      <section class="section__heading">
+        <h1>
+          Start your digital journey to protect your crop with Dr.Tea ensuring a
+          healthy yield
+        </h1>
+        <h3>
+          With our innovative digital solution, you can detect early of tea-leaf
+          diseases,and Improved crop yields and quality
+        </h3>
+      </section>
+      <section id="about" class="section__about__heading">
+        <h1>About Us</h1>
+      </section>
+      <section class="section__about">
+        <p>
+          Welcome to Tea Leaves Disease Prediction, an innovative web
+          application designed to help tea farmers and enthusiasts prevent and
+          manage tea plant diseases.
+        </p>
+        <p>
+          Our goal is to provide a simple, user-friendly tool that allows users
+          to quickly and accurately identify common tea Leaves diseases and take
+          appropriate action to protect their crops.
+        </p>
+        <p>
+          Our team comprises experts in plant pathology, machine learning. We
+          have collaborated to create an advanced algorithm that can analyze
+          images of tea leaves and accurately predict the presence of various
+          diseases, including black rot, blister blight, and grey blight add
+          others too.
+        </p>
+        <p>
+          Our web application is easy to use and accessible from any device with
+          an internet connection. Simply upload an image of your tea leaves and
+          our algorithm will analyze it to determine the likelihood of disease.
+          We also provide information on how to prevent and treat the disease to
+          help you maintain healthy tea plants and maximize your crop yield.
+        </p>
+        <p>
+          Thank you for choosing Tea Leaves Disease Prediction as your go-to
+          resource for tea plant health. We hope our web application helps you
+          maintain healthy and productive tea plants.
+        </p>
+      </section>
+      <section id="howWork" class="section__howWork__heading">
+        <h1>How it Works</h1>
+      </section>
+      <section class="section__howWork">
+        <img src="../static/assets/images/chatbox.png" alt="Dr.Tea" />
+        <div class="section__howWork__text">
+          <ol>
+            <li>Users need to Register or Sign In to the system.</li>
+            <li>
+              After the Signing In, user need to upload the disease picture.
+            </li>
+            <li>System will predict the disease and suggest solutions.</li>
+          </ol>
+        </div>
+      </section>
+      <section id="ourStory" class="section__ourStory__heading">
+        <h1>Our Story</h1>
+      </section>
+      <section class="section__ourStory">
+        <p>
+          Our Dr. Tea tealeaves disease prediction web was created with one goal
+          in mind: to help tea farmers protect their crops from diseases and
+          increase their yields. As farmers ourselves, we understand the
+          challenges and risks associated with crop management, and we wanted to
+          develop a web that could help farmers overcome these challenges.
+        </p>
+        <p>
+          Our team consists of experienced tea farmers, agricultural experts,
+          and software developers who worked together to create an innovative
+          tealeaves disease prediction web application. We combined our
+          knowledge of tea farming with the latest technologies in machine
+          learning and data analysis to create a tool that is accurate,
+          reliable, and easy to use.
+        </p>
+        <p>
+          Our Dr. Tea web application uses advanced algorithms to analyze
+          environmental data, weather patterns, and other factors to predict
+          potential diseases in tealeaves. The app provides farmers with
+          real-time alerts and recommendations on preventive measures, helping
+          them to take action quickly and minimize crop loss.
+        </p>
+        <p>
+          We believe that our tealeaves disease prediction web app can
+          revolutionize the way tea farmers manage their crops, and we are
+          committed to making it accessible to farmers around the world. Our
+          goal is to empower farmers with the knowledge and tools they need to
+          protect their crops and increase their yields, while also promoting
+          sustainable and environmentally friendly farming practices.
+        </p>
+        <p>
+          Join us on our mission to help tea farmers succeed, one tealeaf at a
+          time.
+        </p>
+      </section>
+      <section id="contact" class="section__contact__heading">
+        <h1>Contact Us</h1>
+      </section>
+        <section class="section__contact">
+            <form action="/contact" id="cont" method="post" enctype="multipart/form-data">
+                <label>
+                    <input type="text" name="firstname" placeholder="Your Name..." />
+                </label>
+                <label>
+                    <input type="text" name="email" placeholder="Your Email..." />
+                </label>
+                <label>
+                    <textarea id="subject" name="subject" placeholder="Write something.."></textarea>
+                </label>
+                <input id="submit" type="submit" value="Submit">
+            </form>
+      </section>
+        <section class="spacer"></section>
+    </div>
+  </body>
+</html>
