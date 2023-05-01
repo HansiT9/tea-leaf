@@ -54,6 +54,14 @@
         justify-content: space-between;
       }
 
+      .botContainer {
+          background-image: url("../static/assets/images/chatbot.gif");
+          background-repeat: no-repeat;
+          background-size: 20%;
+          background-position: center center;
+
+      }
+
       .header__left {
         width: 20%;
         display: flex;
@@ -146,7 +154,7 @@
       }
 
       .userMsg {
-        background-color: #4287f5;
+        background-color: rgba(66, 135, 245, 0.79);
         color: white;
         width: 450px;
         text-align: justify;
@@ -206,6 +214,31 @@
         background: rgba(255, 255, 255, 0.54);
         border-radius: 5px;
       }
+
+      #time {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          font-size: 12px;
+      }
+
+      #cusBtn {
+          width: 30%;
+          padding: 5px;
+          border: none;
+          border-radius: 10px;
+          background-color: #4287f5;
+          color: #fff;
+          font-weight: 600;
+          margin-right: 5%;
+          cursor: pointer;
+          transition: 200ms;
+      }
+
+      #cusBtn:hover {
+          box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+      }
+
     </style>
   </head>
   <body>
@@ -231,6 +264,7 @@
           <div class="full_width">
             <div class="botMsg">
               <p>Hi, welcome to Dr.tea ! Go ahead and send me a message. 😄</p>
+              <p id="time">12.45</p>
             </div>
           </div>
 
@@ -263,6 +297,11 @@
     </main>
 
     <script>
+       document.addEventListener("DOMContentLoaded", function () {
+            const textId = document.getElementById("time");
+            textId.textContent = formatDate(new Date())
+       })
+
       const msgerForm = get(".form__container");
       const msgerInput = get(".botContainer__controls__input");
       const msgerChat = get(".botContainer__body");
@@ -285,8 +324,9 @@
         const msgHTML = `<div class="full_width">
             <div class="${cls}">
                 <p>${text}</p>
+                <p id="time">${formatDate(new Date())}</p>
             </div>
-</div>
+           </div>
           `;
 
         msgerChat.insertAdjacentHTML("beforeend", msgHTML);
@@ -302,7 +342,7 @@
           rawText.search("yes") > -1
         ) {
           rawText =
-            "<form action=/predict method=post enctype=multipart/form-data> <input type=file  class=buttonp name=image onchange=loadfile(event); class=upload><br>  <br><img id='output' width='200px' height='200px'/> <br> <input type=submit class=buttonp value=Predict>";
+            "<form action=/predict method=post enctype=multipart/form-data> <input type=file required accept='image/*'   class=buttonp name=image onchange=loadfile(event); class=upload><br>  <br><img id='output' width='200px' height='200px'/> <br> <input type=submit id='cusBtn' class=buttonp value=Predict>";
           appendMessage(BOT_NAME, "botMsg", "left", rawText);
         } else {
           rawText = "hi  " + rawText + "  type ' yes ' to upload Picture";
@@ -320,6 +360,12 @@
 
       function get(selector, root = document) {
         return root.querySelector(selector);
+      }
+
+      function formatDate(date) {
+        const h = "0" + date.getHours();
+        const m = "0" + date.getMinutes();
+        return `${h.slice(-2)}:${m.slice(-2)}`;
       }
     </script>
   </body>

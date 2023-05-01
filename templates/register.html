@@ -149,12 +149,96 @@
       .form__input input[type="submit"]:hover {
         box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
       }
+
+      #toast {
+          align-self: center;
+        justify-self: center;
+        visibility: hidden;
+        width: max-content;
+        {#margin-left: 40%;#}
+        text-align: center;
+        border-radius: 5px;
+        padding: 16px 25px;
+        position: fixed;
+        z-index: 1;
+        top: 30px;
+        font-size: 12px;
+        {#inline-size: 230px;#}
+        overflow-wrap: break-word;
+      }
+
+      #toast.show {
+        visibility: visible;
+        -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      }
+
+      .error {
+        background-color: #e55a5a;
+        color: #ffffff;
+      }
+
+      .success {
+        background-color: #46cb8b;
+        color: #fff;
+      }
+
+      @-webkit-keyframes fadein {
+        from {
+          top: 0;
+          opacity: 0;
+        }
+        to {
+          top: 30px;
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadein {
+        from {
+          top: 0;
+          opacity: 0;
+        }
+        to {
+          top: 30px;
+          opacity: 1;
+        }
+      }
+
+      @-webkit-keyframes fadeout {
+        from {
+          top: 30px;
+          opacity: 1;
+        }
+        to {
+          top: 0;
+          opacity: 0;
+        }
+      }
+
+      @keyframes fadeout {
+        from {
+          top: 30px;
+          opacity: 1;
+        }
+        to {
+          top: 0;
+          opacity: 0;
+        }
+      }
     </style>
   </head>
   <body>
     <main class="container">
       <section class="form__container">
-        <form id="register-form" name="myForm" action="/register-user" method="post" enctype="multipart/form-data">
+        <form
+          id="register-form"
+          name="myForm"
+          action="/register-user"
+          method="post"
+          enctype="multipart/form-data"
+          onsubmit="return validateForm()"
+        >
           <div class="form__left">
             <div class="form__left__logo">
               <img src="../static/assets/images/logo.png" alt="Dr.Tea" />
@@ -185,7 +269,8 @@
                   type="password"
                   minlength="6"
                   required
-                  placeholder="Password"
+                  pattern="^(?=.*\d)(?=.*[a-zA-Z])\S{6,}$"
+                  placeholder="At least 6 characters (Include at least 1 digit or character)"
                   name="password"
                 />
               </label>
@@ -197,7 +282,8 @@
                   id="email"
                   type="email"
                   required
-                  placeholder="Email"
+                  pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+                  placeholder="example@mail.com"
                   name="email"
                 />
               </label>
@@ -208,12 +294,10 @@
                 <input
                   id="nic"
                   type="text"
-                  minlength="10"
-                  maxlength="14"
                   required
-                  placeholder="Nic"
                   name="nic"
                   pattern="^([0-9]{9}[x|X|v|V]|[0-9]{12})$"
+                  placeholder="Enter your NIC (e.g. 971234567V or 200012345678)"
                 />
               </label>
             </div>
@@ -261,41 +345,110 @@
           </div>
         </form>
       </section>
+      <div id="toast"></div>
     </main>
-  <script>
-      function validateForm() {
-          let x = document.forms["myForm"]["nic"].value;
-          let num = document.forms["myForm"]["pNumber"].value;
+    <script>
+      const form = document.querySelector("form");
+      const toast = document.querySelector("#toast");
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
 
-          for (let i = 0; i < num.length; i++) {
-              if (/[0-9]/.test(num[i]) === false) {
-                  alert("Your phone number is not valid")
-                  return false;
-              }
-          }
+        const formData = new FormData(form);
+        fetch("/register-user", {
+          method: "POST",
+          body: formData,
+        }).then((response) => {
+          if (response.status === 200) {
+            toast.classList.add("show");
+            toast.classList.add("success");
+            toast.textContent = "Registration Successful!";
 
-          if (x.length === 10) {
-              if (x.at(-1) !== 'v') {
-                  alert("Please add 'v");
-                  return false
-              }
+            setTimeout(function () {
+              const toast = document.querySelector("#toast");
+              const username = document.querySelector("#username");
+              const password = document.querySelector("#password");
 
-              if (/[0-9]/.test(x.substr(0, 8)) === false) {
-                  alert("Your nic does not contain numbers")
-                  return false;
-              }
-          } else if (x.length === 12) {
-              if (/[0-9]/.test(x.substr(0, 10)) === false) {
-                  alert("Your nic number does not contain numbers")
-              }
+              toast.classList.remove("show");
+              toast.classList.remove("success");
+              username.value = "";
+              password.value = "";
+              window.location.href = "/login";
+            }, 3000);
           } else {
-              alert("Your nic is not valid")
-              return false;
-          }
+            toast.classList.add("show");
+            toast.classList.add("error");
+            toast.textContent = "Registration Failed!";
 
-          alert("Registration Successfully Completed!")
-          return true;
-      }
-  </script>
+            setTimeout(function () {
+                const toast = document.querySelector("#toast");
+                const username = document.querySelector("#username");
+                const password = document.querySelector("#password");
+
+                toast.classList.remove("show");
+                toast.classList.remove("error");
+                username.value = "";
+                password.value = "";
+                {#window.location.href = "/chatbot";#}
+            }, 3000);
+          }
+        })
+        .catch((error) => {
+            toast.classList.add("show");
+            toast.classList.add("error");
+            toast.textContent = "Registration Failed!";
+
+            setTimeout(function () {
+                const toast = document.querySelector("#toast");
+                const username = document.querySelector("#username");
+                const password = document.querySelector("#password");
+
+                toast.classList.remove("show");
+                toast.classList.remove("error");
+                username.value = "";
+                password.value = "";
+                {#window.location.href = "/chatbot";#}
+            }, 3000);
+        })
+      });
+    </script>
+    {#
+    <script>
+      #}
+      {#      function validateForm() {#}
+      {#        let x = document.forms["myForm"]["nic"].value;#}
+      {#        let num = document.forms["myForm"]["pNumber"].value;#}
+      {##}
+      {#        for (let i = 0; i < num.length; i++) {#}
+      {#          if (/[0-9]/.test(num[i]) === false) {#}
+      {#            alert("Your phone number is not valid");#}
+      {#            return false;#}
+      {#          }#}
+      {#        }#}
+      {##}
+      {#        if (x.length === 10) {#}
+      {#          if (x.at(-1) !== "v") {#}
+      {#            alert("Please add 'v");#}
+      {#            return false;#}
+      {#          }#}
+      {##}
+      {#          if (/[0-9]/.test(x.substr(0, 8)) === false) {#}
+      {#            alert("Your nic does not contain numbers");#}
+      {#            return false;#}
+      {#          }#}
+      {#        } else if (x.length === 12) {#}
+      {#          if (/[0-9]/.test(x.substr(0, 10)) === false) {#}
+      {#            alert("Your nic number does not contain numbers");#}
+      {#          }#}
+      {#        } else {#}
+      {#          alert("Your nic is not valid");#}
+      {#          return false;#}
+      {#        }#}
+      {##}
+      {#        alert("Registration Successfully Completed!");#}
+      {#        return true;#}
+      {#      }#}
+      {#
+    </script>
+    #}
   </body>
 </html>

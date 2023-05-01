@@ -57,7 +57,6 @@ def chatbot_page():
     return render_template('chatbot.html')
 
 
-
 def diceas_predict(diceas_image):
     test_image = load_img(diceas_image, target_size=(180, 180))  # load image
     print("@@ Got Image for prediction")
@@ -171,26 +170,30 @@ def login():
                 res_c = []
                 for r in res:
                     res_c.append(r)
-                return render_template("admin.html", results=resli, results_c=res_c)
+                    return "Successful", 200
+                # return render_template("admin.html", results=resli, results_c=res_c)
             for row in cursor:
                 count = count + 1
             if count > 0:
                 print("login successfully")
                 # e.say("login successfully")
                 # e.runAndWait()
-                return render_template('chatbot.html')
+                return "Successful", 200
+                # return render_template('chatbot.html', message="Login Successful")
             else:
                 print("please register with our app !")
                 # e.say("please register with our app !")
                 # e.runAndWait()
-                return render_template("login.html", message="incorrect password or username. try to sing up")
+                return "Failed", 400
+                # return render_template("login.html", message="Either Username or Password Incorrect. Please try again!")
             print("@@ Input posted = ", name)
         except:
             con.rollback()
-            return 'Error occurred while login user'
+            return "Failed", 500
+            # return render_template("login.html", message="Something went wrong on our side!")
 
 
-@app.route("/register-user", methods=['GET', 'POST'])
+@app.route("/register-user", methods=['POST'])
 def register():
     count = 0
     if request.method == 'POST':
@@ -209,10 +212,10 @@ def register():
             con.commit()
             # e.say("hi "+name+" thank you for register with us !")
             # e.runAndWait()
-            return render_template("chatbot.html")
+            return "Successful", 200
         except:
             con.rollback()
-            return 'Error occurred while registering user'
+            return "Successful", 500
 
 
 @app.route("/contact", methods=['GET', 'POST'])

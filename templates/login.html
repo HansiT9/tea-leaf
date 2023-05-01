@@ -146,12 +146,89 @@
       .form__input input[type="submit"]:hover {
         box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
       }
+
+      #toast {
+          align-self: center;
+        justify-self: center;
+        visibility: hidden;
+        width: max-content;
+        {#margin-left: 40%;#}
+        text-align: center;
+        border-radius: 5px;
+        padding: 16px 25px;
+        position: fixed;
+        z-index: 1;
+        top: 30px;
+        font-size: 12px;
+        {#inline-size: 230px;#}
+        overflow-wrap: break-word;
+      }
+
+      #toast.show {
+        visibility: visible;
+        -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      }
+
+      .error {
+        background-color: #e55a5a;
+        color: #ffffff;
+      }
+
+      .success {
+        background-color: #46cb8b;
+        color: #fff;
+      }
+
+      @-webkit-keyframes fadein {
+        from {
+          top: 0;
+          opacity: 0;
+        }
+        to {
+          top: 30px;
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadein {
+        from {
+          top: 0;
+          opacity: 0;
+        }
+        to {
+          top: 30px;
+          opacity: 1;
+        }
+      }
+
+      @-webkit-keyframes fadeout {
+        from {
+          top: 30px;
+          opacity: 1;
+        }
+        to {
+          top: 0;
+          opacity: 0;
+        }
+      }
+
+      @keyframes fadeout {
+        from {
+          top: 30px;
+          opacity: 1;
+        }
+        to {
+          top: 0;
+          opacity: 0;
+        }
+      }
     </style>
   </head>
   <body>
     <main class="container">
       <section class="form__container">
-        <form action="/login-user" method="post" enctype="multipart/form-data">
+        <form>
           <div class="form__left">
             <div class="form__left__logo">
               <img src="../static/assets/images/logo.png" alt="Dr.Tea" />
@@ -165,8 +242,9 @@
               <p>Username</p>
               <label>
                 <input
+                  id="username"
                   type="text"
-                  value=""
+                  required
                   placeholder="Username"
                   name="username"
                 />
@@ -190,6 +268,72 @@
           </div>
         </form>
       </section>
+      <div id="toast"></div>
     </main>
+    <script>
+      const form = document.querySelector("form");
+      const toast = document.querySelector("#toast");
+      form.addEventListener("submit", (event) => {
+        event.preventDefault(); // prevent the default form submission behavior
+
+        const formData = new FormData(form);
+        fetch("/login-user", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => {
+            if (response.status === 200) {
+              toast.classList.add("show");
+              toast.classList.add("success");
+              toast.textContent = "Login Successful!";
+
+              setTimeout(function () {
+                const toast = document.querySelector("#toast");
+                const username = document.querySelector("#username");
+                const password = document.querySelector("#password");
+
+                toast.classList.remove("show");
+                toast.classList.remove("success");
+                username.value = "";
+                password.value = "";
+                window.location.href = "/chatbot";
+              }, 3000);
+            } else {
+              toast.classList.add("show");
+              toast.classList.add("error");
+              toast.textContent = "Login Failed!";
+
+              setTimeout(function () {
+                const toast = document.querySelector("#toast");
+                const username = document.querySelector("#username");
+                const password = document.querySelector("#password");
+
+                toast.classList.remove("show");
+                toast.classList.remove("error");
+                username.value = "";
+                password.value = "";
+                {#window.location.href = "/chatbot";#}
+              }, 3000);
+            }
+          })
+          .catch((error) => {
+            toast.classList.add("show");
+              toast.classList.add("error");
+              toast.textContent = "Login Failed!";
+
+              setTimeout(function () {
+                const toast = document.querySelector("#toast");
+                const username = document.querySelector("#username");
+                const password = document.querySelector("#password");
+
+                toast.classList.remove("show");
+                toast.classList.remove("error");
+                username.value = "";
+                password.value = "";
+                {#window.location.href = "/chatbot";#}
+              }, 3000);
+          });
+      });
+    </script>
   </body>
 </html>
